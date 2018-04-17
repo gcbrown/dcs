@@ -1,3 +1,6 @@
+<head>
+	<title>DCS Zoning</title>
+</head>
 <script>
 names = {
     "DH": "Decatur High",
@@ -51,5 +54,20 @@ function processData(allText) {
     alert("Your address was not found. Please try abbreviations (e.g. Highway -> Hwy).");
 }
 </script>
-<input id="inputStreetName" type="text" placeholder="Street Name"> <br> 
-<input id="inputStreetNumber" type="number" placeholder="Street Number"> <br> <input id="inputConfirm" type="button" value="Check Zones" onclick="loadData()">
+
+<style>
+	#inputStreetName, #inputStreetNumber {
+		width: 300px
+	}
+</style>
+<div style="text-align: center;">
+<h2>Decatur City Schools - Zoning</h2>
+<p>Please input your current address to determine your DCS school zones.</p>
+<input id="inputStreetName" type="text" placeholder="All or part of your street name">
+<br>
+<br>
+<input id="inputStreetNumber" type="number" placeholder="House number">
+<br>
+<br>
+<input id="inputConfirm" type="button" value="Check Zones" onclick="loadData()">
+</div>
