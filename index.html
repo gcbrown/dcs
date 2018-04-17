@@ -1,1 +1,56 @@
-<h1>Hello!</h1>
+<script>
+names = {
+    "DH": "Decatur High",
+    "AH": "Austin High",
+    "0": "Please call DCS.",
+    "WJ": "Walter Jackson",
+    "OP": "Oak Park",
+    "CR": "Cedar Ridge",
+    "FN": "Francis Nungester",
+    "EW": "Eastwood"
+}
+
+function loadData() {
+	var xhr = new XMLHttpRequest();
+	var IP = "./DCS.csv";
+	xhr.open("GET", IP, true);
+	xhr.send();
+ 
+	xhr.onreadystatechange = e => {
+		if (xhr.readyState === 4)
+			processData(xhr.responseText);
+	};
+}
+
+function processData(allText) {
+    var allTextLines = allText.split(/\r\n|\n/);
+
+    streetIn = inputStreetName.value.toLowerCase();
+    numIn = inputStreetNumber.value;
+
+    for (var i=0; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split(',');
+	street = data[0].toLowerCase();
+	low = Number(data[1]);
+	high = Number(data[2]);
+        //if we are in the correct street and number is within range
+        if (street.includes(streetIn) && numIn > low && numIn < high) {
+            print(data[3]);
+            //check if even or odd
+            if (data[3] === "Both" ||
+                (numIn % 2 === 1 && data[3] === "Odd") ||
+                (numIn % 2 === 0 && data[3] === "Even")) {
+                var info = "Your zoning information is as follows:\n"
+                info += "Elementary: " + names[data[5]] + "\n";
+                info += "Middle: " + names[data[6]] + "\n";
+                info += "High: " + names[data[7]] + "\n";
+                alert(info);
+                return;
+            }
+        }
+    }
+    alert("Your address was not found. Please try abbreviations (e.g. Highway -> Hwy).");
+}
+</script>
+<input id="inputStreetName" type="text" placeholder="Street Name"> <br> 
+<input id="inputStreetNumber" type="number" placeholder="Street Number"> <br> <input id="inputConfirm" type="button" value="Check Zones" onclick="loadData()">
